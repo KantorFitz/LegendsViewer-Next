@@ -1,4 +1,5 @@
-﻿using LegendsViewer.Backend.Legends.Bookmarks;
+﻿using System.Web;
+using LegendsViewer.Backend.Legends.Bookmarks;
 using LegendsViewer.Backend.Legends.Interfaces;
 using LegendsViewer.Backend.Legends.Maps;
 using Microsoft.AspNetCore.Mvc;
@@ -31,11 +32,12 @@ public class BookmarkController(
         return Ok(bookmarks);
     }
 
-    [HttpGet("{filePath}")]
+    [HttpGet("{encodedFilePath}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Bookmark> Get([FromRoute] string filePath)
+    public ActionResult<Bookmark> Get([FromRoute] string encodedFilePath)
     {
+        var filePath = HttpUtility.UrlDecode(encodedFilePath);
         var item = _bookmarkService.GetBookmark(filePath);
         if (item == null)
         {
@@ -44,12 +46,13 @@ public class BookmarkController(
         return Ok(item);
     }
 
-    [HttpDelete("{filePath}")]
+    [HttpDelete("{encodedFilePath}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Bookmark> Delete([FromRoute] string filePath)
+    public ActionResult<Bookmark> Delete([FromRoute] string encodedFilePath)
     {
+        var filePath = HttpUtility.UrlDecode(encodedFilePath);
         if (!_bookmarkService.DeleteBookmarkTimestamp(filePath))
         {
             return NotFound();
