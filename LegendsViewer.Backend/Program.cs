@@ -15,6 +15,8 @@ namespace LegendsViewer.Backend;
 public class Program
 {
     private const string AllowAllOriginsPolicy = "AllowAllOrigins";
+    public const uint BackendPort = 5054;
+    public static readonly string BackendUrl = $"http://localhost:{BackendPort}";
 
     public static void Main(string[] args)
     {
@@ -33,7 +35,7 @@ public class Program
             serverOptions.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
             serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
         })
-        .UseUrls("http://localhost:5054");
+        .UseUrls(BackendUrl);
 
         builder.Services.AddSingleton<IWorld, World>();
         builder.Services.AddSingleton<IWorldMapImageGenerator, WorldMapImageGenerator>();
