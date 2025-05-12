@@ -6,6 +6,7 @@ using LegendsViewer.Backend.Legends.Interfaces;
 using LegendsViewer.Backend.Legends.Maps;
 using LegendsViewer.Backend.Logging;
 using LegendsViewer.Frontend;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Logging.Console;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -77,11 +78,21 @@ public class Program
 
         _ = WebAppStaticServer.RunAsync();
 
+        var openBrowser = Task.Delay(0);
         if (!app.Environment.IsDevelopment())
         {
-            _ = WebAppStaticServer.OpenPageInBrowserAsync();
+            openBrowser = WebAppStaticServer.OpenPageInBrowserAsync();
         }
 
-        app.Run();
+        try
+        {
+            app.Run();
+        }
+        catch (IOException exception) when (exception.InnerException is AddressInUseException)
+        {
+            Console.WriteLine($"Address already in use: {BackendUrl}");
+            Console.WriteLine("Skipping backend server.");
+            Task.WaitAll(openBrowser);
+        }
     }
 }
