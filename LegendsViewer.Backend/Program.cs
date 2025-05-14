@@ -6,6 +6,7 @@ using LegendsViewer.Backend.Legends.Interfaces;
 using LegendsViewer.Backend.Legends.Maps;
 using LegendsViewer.Backend.Logging;
 using LegendsViewer.Frontend;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Logging.Console;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -15,6 +16,8 @@ namespace LegendsViewer.Backend;
 public class Program
 {
     private const string AllowAllOriginsPolicy = "AllowAllOrigins";
+    public const uint BackendPort = 5054;
+    public static readonly string BackendUrl = $"http://localhost:{BackendPort}";
 
     public static void Main(string[] args)
     {
@@ -33,7 +36,7 @@ public class Program
             serverOptions.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
             serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
         })
-        .UseUrls("http://localhost:5054");
+        .UseUrls(BackendUrl);
 
         builder.Services.AddSingleton<IWorld, World>();
         builder.Services.AddSingleton<IWorldMapImageGenerator, WorldMapImageGenerator>();
@@ -75,11 +78,21 @@ public class Program
 
         _ = WebAppStaticServer.RunAsync();
 
+        var openBrowser = Task.Delay(0);
         if (!app.Environment.IsDevelopment())
         {
-            _ = WebAppStaticServer.OpenPageInBrowserAsync();
+            openBrowser = WebAppStaticServer.OpenPageInBrowserAsync();
         }
 
-        app.Run();
+        try
+        {
+            app.Run();
+        }
+        catch (IOException exception) when (exception.InnerException is AddressInUseException)
+        {
+            Console.WriteLine($"Address already in use: {BackendUrl}");
+            Console.WriteLine("Skipping backend server.");
+            Task.WaitAll(openBrowser);
+        }
     }
 }
