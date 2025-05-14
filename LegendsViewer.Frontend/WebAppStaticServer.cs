@@ -37,7 +37,7 @@ public static class WebAppStaticServer
         await Task.Delay(200);
         try
         {
-            Process.Start(new ProcessStartInfo(WebAppUrl) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(WebAppUrl) { UseShellExecute = true })?.WaitForExit();
         }
         catch
         {
