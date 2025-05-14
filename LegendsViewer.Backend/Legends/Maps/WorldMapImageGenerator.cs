@@ -45,6 +45,52 @@ public class WorldMapImageGenerator(IWorld worldDataService) : IWorldMapImageGen
         int pixelWidth = _worldDataService.Width * tileSize;
         int pixelHeight = _worldDataService.Height * tileSize;
 
+        SKBitmap worldImage = GenerateBaseMapImage(tileSize, pixelWidth, pixelHeight);
+
+        DrawRegionsAndObjects(worldImage, tileSize, objectWithCoordinates, depth);
+
+        using (var stream = new SKDynamicMemoryWStream())
+        {
+            worldImage.Encode(stream, SKEncodedImageFormat.Png, 100);
+            imageData = stream.DetachAsData().ToArray();
+            if (imageData != null)
+            {
+                if (objectWithCoordinates == null && depth == null)
+                {
+                    CacheDefaultMap(tileSize, imageData);
+                }
+                return imageData;
+            }
+        }
+        return null;
+    }
+
+    public void Clear()
+    {
+        _worldMapMin = null;
+        _worldMapMid = null;
+        _worldMapMax = null;
+        _exportedWorldMapBitmap = null;
+    }
+
+    private void CacheDefaultMap(int tileSize, byte[] imageData)
+    {
+        switch (tileSize)
+        {
+            case DefaultTileSizeMin:
+                _worldMapMin = imageData;
+                break;
+            case DefaultTileSizeMid:
+                _worldMapMid = imageData;
+                break;
+            case DefaultTileSizeMax:
+                _worldMapMax = imageData;
+                break;
+        }
+    }
+
+    private SKBitmap GenerateBaseMapImage(int tileSize, int pixelWidth, int pixelHeight)
+    {
         SKBitmap worldImage = new(pixelWidth, pixelHeight);
         if (_exportedWorldMapBitmap != null)
         {
@@ -62,44 +108,10 @@ public class WorldMapImageGenerator(IWorld worldDataService) : IWorldMapImageGen
             }
         }
 
-        worldImage = GenerateMapImage(worldImage, tileSize, objectWithCoordinates, depth);
-
-        using (var stream = new SKDynamicMemoryWStream())
-        {
-            worldImage.Encode(stream, SKEncodedImageFormat.Png, 100);
-            imageData = stream.DetachAsData().ToArray();
-            if (imageData != null)
-            {
-                if (objectWithCoordinates == null && depth == null)
-                {
-                    switch (tileSize)
-                    {
-                        case DefaultTileSizeMin:
-                            _worldMapMin = imageData;
-                            break;
-                        case DefaultTileSizeMid:
-                            _worldMapMid = imageData;
-                            break;
-                        case DefaultTileSizeMax:
-                            _worldMapMax = imageData;
-                            break;
-                    }
-                }
-                return imageData;
-            }
-        }
-        return null;
+        return worldImage;
     }
 
-    public void Clear()
-    {
-        _worldMapMin = null;
-        _worldMapMid = null;
-        _worldMapMax = null;
-        _exportedWorldMapBitmap = null;
-    }
-
-    private SKBitmap GenerateMapImage(SKBitmap worldImage, int tileSize, IHasCoordinates? objectWithCoordinates = null, int? depth = null)
+    private void DrawRegionsAndObjects(SKBitmap worldImage, int tileSize, IHasCoordinates? objectWithCoordinates = null, int? depth = null)
     {
         IRegion[,] worldTiles = GetWorldTiles(depth);
 
@@ -146,12 +158,10 @@ public class WorldMapImageGenerator(IWorld worldDataService) : IWorldMapImageGen
             }
 
             // Then, draw a circle around the object for better visibility
-            if (objectWithCoordinates != null && objectWithCoordinates.Coordinates.Count > 0)
+            if (objectWithCoordinates?.Coordinates.Count > 0)
             {
                 EncircleObject(tileSize, objectWithCoordinates, canvas);
             }
-
-            return worldImage;
         }
     }
 
