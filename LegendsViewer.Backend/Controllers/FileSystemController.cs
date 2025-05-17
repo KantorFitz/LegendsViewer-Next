@@ -39,11 +39,12 @@ public class FileSystemController : ControllerBase
             ParentDirectory = Directory.GetParent(directoryName)?.FullName,
             Subdirectories = Directory.GetDirectories(directoryName)
                 .Select(subDirectoryPath => Path.GetRelativePath(directoryName, subDirectoryPath))
-                .Where(f => !f.StartsWith('.')) // remove hidden directories
+                .Where(IsNotUnixHiddenPath)
                 .Order() // sort alphabetically
                 .ToArray(),
             Files = Directory.GetFiles(directoryName, $"*{BookmarkController.FileIdentifierLegendsXml}")
                 .Select(f => Path.GetFileName(f) ?? "")
+                .Where(IsNotUnixHiddenPath)
                 .Order()
                 .ToArray()
         };
@@ -89,14 +90,21 @@ public class FileSystemController : ControllerBase
                 ParentDirectory = null,
                 Subdirectories = rootDir.GetDirectories()
                     .Select(d => d.FullName)
-                    .Where(d => !d.StartsWith('.')) // remove hidden directories
+                    .Where(IsNotUnixHiddenPath)
                     .Order() // sort alphabetically
                     .ToArray(),
                 Files = rootDir.GetFiles()
                     .Select(f => f.FullName)
+                    .Where(IsNotUnixHiddenPath)
                     .Order()
                     .ToArray()
             };
         }
+    }
+
+    private static bool IsNotUnixHiddenPath(string path)
+    {
+        // Hide all '.' paths, except steam path
+        return !(path.StartsWith('.') && path != ".steam");
     }
 }
