@@ -12,7 +12,7 @@ public class FileSystemController : ControllerBase
     [ProducesResponseType<FilesAndSubdirectoriesDto>(StatusCodes.Status200OK)]
     public ActionResult<FilesAndSubdirectoriesDto> Get()
     {
-        return Ok(GetRootInformation());
+        return Ok(GetHomeInformation());
     }
 
     [HttpGet("{encodedPath}")]
@@ -20,33 +20,43 @@ public class FileSystemController : ControllerBase
     public ActionResult<FilesAndSubdirectoriesDto> Get([FromRoute] string encodedPath)
     {
         var path = HttpUtility.UrlDecode(encodedPath);
-        if (!Path.Exists(path) && !Directory.Exists(path))
+
+        if (path == "mounts")
         {
-            return Ok(GetRootInformation());
+            return Ok(GetMountsInformation());
         }
-        string directoryName = Directory.GetCurrentDirectory();
+
+        if (!Path.Exists(path))
+        {
+            return Ok(GetHomeInformation());
+        }
+
+        string directoryName;
         if (Directory.Exists(path))
         {
             directoryName = path;
         }
-        else if (Path.Exists(path))
+        else
         {
             directoryName = Path.GetDirectoryName(path) ?? Directory.GetCurrentDirectory();
         }
+
         var response = new FilesAndSubdirectoriesDto
         {
             CurrentDirectory = directoryName,
-            ParentDirectory = Directory.GetParent(directoryName)?.FullName,
+            ParentDirectory = Directory.GetParent(directoryName)?.FullName ?? "mounts",
             Subdirectories = Directory.GetDirectories(directoryName)
                 .Select(subDirectoryPath => Path.GetRelativePath(directoryName, subDirectoryPath))
-                .Where(f => !f.StartsWith('.')) // remove hidden directories
+                .Where(IsNotUnixHiddenPath)
                 .Order() // sort alphabetically
                 .ToArray(),
             Files = Directory.GetFiles(directoryName, $"*{BookmarkController.FileIdentifierLegendsXml}")
                 .Select(f => Path.GetFileName(f) ?? "")
+                .Where(IsNotUnixHiddenPath)
                 .Order()
                 .ToArray()
         };
+
         return Ok(response);
     }
 
@@ -65,38 +75,47 @@ public class FileSystemController : ControllerBase
         return Get(fullPath);
     }
 
-    private static FilesAndSubdirectoriesDto GetRootInformation()
+    private static FilesAndSubdirectoriesDto GetMountsInformation()
     {
-        if (OperatingSystem.IsWindows())
+        // GetLogicalDrives will also get mount points on Unix/MacOS: see
+        // https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.getlogicaldrives#remarks
+        var logicalDrives = Directory.GetLogicalDrives();
+        return new FilesAndSubdirectoriesDto
         {
-            // Windows: return logical drives (C:\, D:\, etc.)
-            var logicalDrives = Directory.GetLogicalDrives();
-            return new FilesAndSubdirectoriesDto
-            {
-                CurrentDirectory = Path.DirectorySeparatorChar.ToString(),
-                ParentDirectory = null,
-                Subdirectories = logicalDrives,
-                Files = Array.Empty<string>()
-            };
-        }
-        else
+            CurrentDirectory = Path.DirectorySeparatorChar.ToString(),
+            ParentDirectory = null,
+            Subdirectories = logicalDrives.Where(IsNotUnixHiddenPath)
+                .Order() // sort alphabetically
+                .ToArray(),
+            Files = Array.Empty<string>()
+        };
+    }
+
+    private static FilesAndSubdirectoriesDto GetHomeInformation()
+    {
+        var homePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        var homeDir = new DirectoryInfo(homePath);
+
+        return new FilesAndSubdirectoriesDto
         {
-            // Unix-like systems (Linux, macOS): start from root directory
-            var rootDir = new DirectoryInfo("/");
-            return new FilesAndSubdirectoriesDto
-            {
-                CurrentDirectory = "/",
-                ParentDirectory = null,
-                Subdirectories = rootDir.GetDirectories()
-                    .Select(d => d.FullName)
-                    .Where(d => !d.StartsWith('.')) // remove hidden directories
-                    .Order() // sort alphabetically
-                    .ToArray(),
-                Files = rootDir.GetFiles()
-                    .Select(f => f.FullName)
-                    .Order()
-                    .ToArray()
-            };
-        }
+            CurrentDirectory = homePath,
+            ParentDirectory = Directory.GetParent(homePath)?.FullName,
+            Subdirectories = homeDir.GetDirectories()
+                .Select(d => d.Name)
+                .Where(IsNotUnixHiddenPath)
+                .Order() // sort alphabetically
+                .ToArray(),
+            Files = homeDir.GetFiles()
+                .Select(f => f.Name)
+                .Where(IsNotUnixHiddenPath)
+                .Order()
+                .ToArray()
+        };
+    }
+
+    private static bool IsNotUnixHiddenPath(string path)
+    {
+        // Hide all '.' paths, except steam path
+        return !(path.StartsWith('.') && path != ".steam");
     }
 }
