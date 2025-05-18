@@ -1,4 +1,5 @@
-﻿using LegendsViewer.Backend.Legends.EventCollections;
+﻿using LegendsViewer.Backend.Contracts;
+using LegendsViewer.Backend.Legends.EventCollections;
 using LegendsViewer.Backend.Legends.Events;
 using LegendsViewer.Backend.Legends.Parser;
 using System.Text.Json.Serialization;
@@ -51,5 +52,30 @@ public abstract class WorldObject : DwarfObject
     public override string ToLink(bool link = true, DwarfObject? pov = null, WorldEvent? worldEvent = null)
     {
         return "";
+    }
+
+    public virtual bool MatchesFilterCriteria(WorldObjectFilterDto filter)
+    {
+        if (string.IsNullOrWhiteSpace(filter.SearchTerm))
+        {
+            return true;
+        }
+
+        if (Name.Contains(filter.SearchTerm, StringComparison.InvariantCultureIgnoreCase))
+        {
+            return true;
+        }
+
+        if (Type?.Contains(filter.SearchTerm, StringComparison.InvariantCultureIgnoreCase) == true)
+        {
+            return true;
+        }
+
+        if (Subtype?.Contains(filter.SearchTerm, StringComparison.InvariantCultureIgnoreCase) == true)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

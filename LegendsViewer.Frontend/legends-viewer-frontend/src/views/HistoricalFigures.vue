@@ -2,6 +2,7 @@
 import { useHistoricalFigureStore } from '../stores/worldObjectStores';
 import WorldObjectsPage from '../components/WorldObjectsPage.vue';
 import { TableHeader } from '../types/legends';
+import HistoricalFigureFilter from '../components/filter/HistoricalFigureFilter.vue';
 
 const store = useHistoricalFigureStore();
 const icon = "mdi-account";
@@ -22,6 +23,11 @@ const tableHeaders: TableHeader[] = [
 
 <template>
     <WorldObjectsPage :store="store" :icon="icon" :title="title" :subtitle="subtitle" :overviewTitle="overviewTitle"
-        :overviewSubtitle="overviewSubtitle" :wikiKeyWord="wikiKeyWord" :tableHeaders="tableHeaders">
+        :overviewSubtitle="overviewSubtitle" :wikiKeyWord="wikiKeyWord" :tableHeaders="tableHeaders"
+        :showFilters="true">
+        <template v-slot:type-specific-filter="{ filters }">
+            <HistoricalFigureFilter :title="title" :filters="filters"
+                @update:filters="val => filters.splice(0, filters.length, ...val)" />
+        </template>
     </WorldObjectsPage>
 </template>

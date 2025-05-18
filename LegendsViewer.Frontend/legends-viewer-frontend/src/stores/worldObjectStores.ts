@@ -13,6 +13,8 @@ type PathsWithMethod<TPaths, TMethod extends string> = {
 type WorldObjectDto = components['schemas']['WorldObjectDto'];
 type WorldEventDto = components['schemas']['WorldEventDto'];
 type ChartDataDto = components['schemas']['ChartDataDto'];
+export type FilterRuleDto = components["schemas"]["FilterRuleDto"];
+export type FilterOperator = components["schemas"]["FilterOperator"];
 
 const worldObjectApiPaths: Record<string, {
     overview: PathsWithMethod<paths, "get">;
@@ -388,19 +390,22 @@ export function createWorldObjectStore<T>(resourceName: string, type: string) {
             isLoading: false as boolean
         }),
         actions: {
-            async loadOverview(pageNumber: number, pageSize: number, sortBy: LoadItemsSortOption[], search: string) {
+            async loadOverview(pageNumber: number, pageSize: number, sortBy: LoadItemsSortOption[], search: string, filters: FilterRuleDto[]) {
                 this.isLoading = true;
                 // @ts-ignore
-                const { data, error } = await client.GET(pathsForResource.overview, {
+                const { data, error } = await client.POST(pathsForResource.overview, {
                     params: {
                         query: {
                             pageNumber: pageNumber,
                             pageSize: pageSize,
                             sortKey: sortBy[0]?.key,
-                            sortOrder: sortBy[0]?.order,
-                            search: search
+                            sortOrder: sortBy[0]?.order
                         },
                     },
+                    body: {
+                        filters: filters,
+                        searchTerm: search,
+                    }
                 });
 
                 if (error !== undefined) {
@@ -415,6 +420,7 @@ export function createWorldObjectStore<T>(resourceName: string, type: string) {
             },
             async load(id: number) {
                 this.isLoading = true;
+                // @ts-ignore
                 const { data, error } = await client.GET(pathsForResource.object, {
                     params: {
                         path: { id: id },

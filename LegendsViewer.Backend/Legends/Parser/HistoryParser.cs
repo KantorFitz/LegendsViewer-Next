@@ -115,7 +115,7 @@ public class HistoryParser : IDisposable
                 {
                     string deityName = Formatting.InitCaps(Formatting.ReplaceNonAscii(_currentLine.Substring(2,
                         _currentLine.IndexOf(",", StringComparison.Ordinal) - 2)));
-                    var deities = _world.HistoricalFigures.Where(h => h.Name.Equals(deityName.Replace("'", "`"), StringComparison.OrdinalIgnoreCase) && (h.Deity || h.Force)).ToList();
+                    var deities = _world.HistoricalFigures.Where(h => h.Name.Equals(deityName.Replace("'", "`"), StringComparison.OrdinalIgnoreCase) && (h.IsDeity || h.Force)).ToList();
                     if (deities.Count == 1)
                     {
                         var deity = deities[0];

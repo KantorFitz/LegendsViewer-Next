@@ -11,18 +11,19 @@ namespace LegendsViewer.Backend.Controllers;
 public abstract class WorldObjectGenericController<T>(IWorldObjectRepository<T> repository) : ControllerBase where T : WorldObject
 {
     private const int DefaultPageSize = 10;
+    private const int DefaultPageNumber = 1;
     protected readonly IWorldObjectRepository<T> Repository = repository;
 
-    [HttpGet]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PaginatedResponse<WorldObjectDto>> Get(
-        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageNumber = DefaultPageNumber,
         [FromQuery] int pageSize = DefaultPageSize,
         [FromQuery] string? sortKey = null,
         [FromQuery] string? sortOrder = null,
-        [FromQuery] string? search = null)
+        [FromBody] WorldObjectFilterDto? filter = null)
     {
         // Validate pagination parameters
         if (pageNumber <= 0 || pageSize <= 0)
@@ -31,12 +32,9 @@ public abstract class WorldObjectGenericController<T>(IWorldObjectRepository<T> 
         }
 
         // Filter world objects
-        var filteredWorldObjects = Repository.GetAllElements()
-            .Where(worldObject =>
-                string.IsNullOrWhiteSpace(search) ||
-                worldObject.Name.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                worldObject.Type?.Contains(search, StringComparison.InvariantCultureIgnoreCase) == true ||
-                worldObject.Subtype?.Contains(search, StringComparison.InvariantCultureIgnoreCase) == true);
+        var filteredWorldObjects = filter != null ?
+            Repository.GetAllElements().Where(worldObject => worldObject.MatchesFilterCriteria(filter)) :
+            Repository.GetAllElements();
 
         // Get total number of elements
         int totalElements = Repository.GetCount();
@@ -99,7 +97,7 @@ public abstract class WorldObjectGenericController<T>(IWorldObjectRepository<T> 
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PaginatedResponse<WorldEventDto>> GetEvents(
         [FromRoute] int id,
-        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageNumber = DefaultPageNumber,
         [FromQuery] int pageSize = DefaultPageSize,
         [FromQuery] string? sortKey = null,
         [FromQuery] string? sortOrder = null)
@@ -146,7 +144,7 @@ public abstract class WorldObjectGenericController<T>(IWorldObjectRepository<T> 
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PaginatedResponse<WorldObjectDto>> GetEventCollections(
         [FromRoute] int id,
-        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageNumber = DefaultPageNumber,
         [FromQuery] int pageSize = DefaultPageSize,
         [FromQuery] string? sortKey = null,
         [FromQuery] string? sortOrder = null)

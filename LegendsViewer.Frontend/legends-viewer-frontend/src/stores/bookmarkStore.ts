@@ -74,10 +74,10 @@ export const useBookmarkStore = defineStore('bookmark', {
         this.isLoadingNewWorld = true;
       }
 
-      const { data, error } = await client.DELETE("/api/Bookmark/{filePath}", {
+      const { data, error } = await client.DELETE("/api/Bookmark/{encodedFilePath}", {
         params: {
           path: {
-            filePath: filePath.replace("{TIMESTAMP}", latestTimestamp)
+            encodedFilePath: filePath.replace("{TIMESTAMP}", latestTimestamp)
           }
         }
       });

@@ -363,7 +363,7 @@ public class HistoricalFigure : WorldObject
                 list.Add(new ListItemDto
                 {
                     Title = "Age",
-                    Subtitle = Age.ToString() + (Alive ? "" : " ✝")
+                    Subtitle = Age.ToString() + (IsAlive ? "" : " ✝")
                 });
             }
             if (BirthYear != -1)
@@ -533,13 +533,13 @@ public class HistoricalFigure : WorldObject
         set => _familyTreeData = value;
     }
 
-    public bool Alive
+    public bool IsAlive
     {
         get => DeathYear == -1;
         set { }
     }
 
-    public bool Deity { get; set; }
+    public bool IsDeity { get; set; }
     public bool Skeleton { get; set; }
     public bool Force { get; set; }
     public bool Zombie { get; set; }
@@ -581,7 +581,7 @@ public class HistoricalFigure : WorldObject
                 case "race": Race = world.GetCreatureInfo(property.Value); break;
                 case "caste": Caste = Formatting.InitCaps(property.Value); break;
                 case "associated_type": AssociatedType = Formatting.InitCaps(property.Value); break;
-                case "deity": Deity = true; property.Known = true; break;
+                case "deity": IsDeity = true; property.Known = true; break;
                 case "skeleton": Skeleton = true; property.Known = true; break;
                 case "force": Force = true; property.Known = true; Race = world.GetCreatureInfo("Force"); break;
                 case "zombie": Zombie = true; property.Known = true; break;
@@ -855,7 +855,7 @@ public class HistoricalFigure : WorldObject
         {
             return ForceNatureIcon;
         }
-        if (Deity)
+        if (IsDeity)
         {
             return DeityIcon;
         }
@@ -901,7 +901,7 @@ public class HistoricalFigure : WorldObject
             title += "&#13";
             title += $"Born: {BirthYear}";
         }
-        if (!Alive)
+        if (!IsAlive)
         {
             title += "&#13";
             title += $"Died: {DeathYear}";
@@ -909,7 +909,7 @@ public class HistoricalFigure : WorldObject
         if (Age > -1)
         {
             title += "&#13";
-            title += $"Age: {Age} years {(Alive ? "" : "✝")}";
+            title += $"Age: {Age} years {(IsAlive ? "" : "✝")}";
         }
         title += "&#13";
         title += "Events: " + Events.Count;
@@ -1071,7 +1071,7 @@ public class HistoricalFigure : WorldObject
         {
             Race = CreatureInfo.Unknown;
         }
-        if (Deity)
+        if (IsDeity)
         {
             return Race.NameSingular.ToLower() + " deity";
         }
@@ -1160,5 +1160,91 @@ public class HistoricalFigure : WorldObject
             }
         }
         return relevantCreatureTypes;
+    }
+
+    public override bool MatchesFilterCriteria(WorldObjectFilterDto filter)
+    {
+        if (!base.MatchesFilterCriteria(filter))
+        {
+            return false;
+        }
+
+        foreach (var rule in filter.Filters)
+        {
+            if (rule.PropertyName.Equals(nameof(IsAlive), StringComparison.InvariantCultureIgnoreCase) &&
+                ViolatesBooleanCriteria(rule, IsAlive))
+            {
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(IsDeity), StringComparison.InvariantCultureIgnoreCase) &&
+                ViolatesBooleanCriteria(rule, IsDeity))
+            {
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(HistoricalFigureExtensions.IsVampire), StringComparison.InvariantCultureIgnoreCase) &&
+                ViolatesBooleanCriteria(rule, HistoricalFigureExtensions.IsVampire(this)))
+            {
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(HistoricalFigureExtensions.IsWerebeast), StringComparison.InvariantCultureIgnoreCase) &&
+                ViolatesBooleanCriteria(rule, HistoricalFigureExtensions.IsWerebeast(this)))
+            {
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(HistoricalFigureExtensions.IsNecromancer), StringComparison.InvariantCultureIgnoreCase) &&
+                ViolatesBooleanCriteria(rule, HistoricalFigureExtensions.IsNecromancer(this)))
+            {
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(Age), StringComparison.InvariantCultureIgnoreCase) && int.TryParse(rule.Value, out int result))
+            {
+                if (rule.Operator == FilterOperator.Equals && Age != result)
+                {
+                    return false;
+                }
+                if (rule.Operator == FilterOperator.NotEquals && Age == result)
+                {
+                    return false;
+                }
+                if (rule.Operator == FilterOperator.GreaterThan && Age <= result)
+                {
+                    return false;
+                }
+                if (rule.Operator == FilterOperator.LessThan && Age >= result)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private static bool ViolatesBooleanCriteria(FilterRuleDto rule, bool actualValue)
+    {
+        if (rule.Operator == FilterOperator.Equals)
+        {
+            if (rule.Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) && !actualValue)
+            {
+                return true;
+            }
+            else if (rule.Value.Equals("false", StringComparison.InvariantCultureIgnoreCase) && actualValue)
+            {
+                return true;
+            }
+        }
+        if (rule.Operator == FilterOperator.NotEquals)
+        {
+            if (rule.Value.Equals("false", StringComparison.InvariantCultureIgnoreCase) && !actualValue)
+            {
+                return true;
+            }
+            else if (rule.Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) && actualValue)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

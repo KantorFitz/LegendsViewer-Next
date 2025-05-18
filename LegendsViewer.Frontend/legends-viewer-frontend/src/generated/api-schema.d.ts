@@ -11,20 +11,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -61,8 +68,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -395,20 +400,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -445,8 +457,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -779,20 +789,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -829,8 +846,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1163,20 +1178,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -1213,8 +1235,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1577,7 +1597,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/Bookmark/{filePath}": {
+    "/api/Bookmark/{encodedFilePath}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1589,7 +1609,7 @@ export interface paths {
                 query?: never;
                 header?: never;
                 path: {
-                    filePath: string;
+                    encodedFilePath: string;
                 };
                 cookie?: never;
             };
@@ -1626,7 +1646,7 @@ export interface paths {
                 query?: never;
                 header?: never;
                 path: {
-                    filePath: string;
+                    encodedFilePath: string;
                 };
                 cookie?: never;
             };
@@ -1799,20 +1819,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -1849,8 +1876,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2183,20 +2208,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -2233,8 +2265,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2567,20 +2597,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -2617,8 +2654,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2951,20 +2986,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -3001,8 +3043,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3335,20 +3375,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -3385,8 +3432,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3719,20 +3764,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -3769,8 +3821,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -4140,20 +4190,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -4190,8 +4247,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -4524,20 +4579,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -4574,8 +4636,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -5035,20 +5095,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -5085,8 +5152,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -5419,20 +5484,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -5469,8 +5541,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -5803,20 +5873,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -5853,8 +5930,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -6187,20 +6262,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -6237,8 +6319,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -6571,20 +6651,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -6621,8 +6708,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -6955,20 +7040,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -7005,8 +7097,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -7339,20 +7429,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -7389,8 +7486,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -7723,20 +7818,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -7773,8 +7875,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -8107,20 +8207,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -8157,8 +8264,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -8491,20 +8596,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -8541,8 +8653,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -8875,20 +8985,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -8925,8 +9042,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -9259,20 +9374,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -9309,8 +9431,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -9643,20 +9763,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -9693,8 +9820,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -10027,20 +10152,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -10077,8 +10209,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -10411,20 +10541,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -10461,8 +10598,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -10795,20 +10930,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -10845,8 +10987,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -11179,20 +11319,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -11229,8 +11376,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -11563,20 +11708,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -11613,8 +11765,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -11947,20 +12097,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -11997,8 +12154,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -12331,20 +12486,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -12381,8 +12543,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -12752,20 +12912,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -12802,8 +12969,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -13854,20 +14019,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
+        get?: never;
+        put?: never;
+        post: {
             parameters: {
                 query?: {
                     pageNumber?: number;
                     pageSize?: number;
                     sortKey?: string;
                     sortOrder?: string;
-                    search?: string;
                 };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["WorldObjectFilterDto"];
+                    "text/json": components["schemas"]["WorldObjectFilterDto"];
+                    "application/*+json": components["schemas"]["WorldObjectFilterDto"];
+                };
+            };
             responses: {
                 /** @description OK */
                 200: {
@@ -13904,8 +14076,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -14760,6 +14930,13 @@ export interface components {
             files?: string[] | null;
         };
         /** @enum {string} */
+        FilterOperator: "Equals" | "NotEquals" | "Contains" | "GreaterThan" | "LessThan";
+        FilterRuleDto: {
+            propertyName?: string | null;
+            operator?: components["schemas"]["FilterOperator"];
+            value?: string | null;
+        };
+        /** @enum {string} */
         FormType: "Unknown" | "Musical" | "Poetic" | "Dance";
         /** @enum {string} */
         HfState: "Unknown" | "None" | "Settled" | "Wandering" | "Scouting" | "Snatcher" | "Refugee" | "Thief" | "Hunting" | "Visiting";
@@ -14830,8 +15007,8 @@ export interface components {
             readonly positionList?: components["schemas"]["ListItemDto"][] | null;
             readonly beastAttackLinks?: string[] | null;
             familyTreeData?: components["schemas"]["CytoscapeData"];
-            alive?: boolean;
-            deity?: boolean;
+            isAlive?: boolean;
+            isDeity?: boolean;
             skeleton?: boolean;
             force?: boolean;
             zombie?: boolean;
@@ -15628,6 +15805,10 @@ export interface components {
             pageNumber?: number;
             /** Format: int32 */
             totalPages?: number;
+        };
+        WorldObjectFilterDto: {
+            filters?: components["schemas"]["FilterRuleDto"][] | null;
+            searchTerm?: string | null;
         };
         WorldRegion: {
             /** Format: int32 */

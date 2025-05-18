@@ -1,6 +1,5 @@
 ﻿using LegendsViewer.Backend.Legends.Cytoscape;
 using LegendsViewer.Backend.Legends.Enums;
-using LegendsViewer.Backend.Legends.WorldLinks;
 using LegendsViewer.Backend.Legends.WorldObjects;
 using LegendsViewer.Backend.Utilities;
 using System.Net;
@@ -115,17 +114,17 @@ public static class HistoricalFigureExtensions
         title += current.Race != null && current.Race != original.Race ? current.Race.NameSingular + " " : "";
 
         string description = "";
-        if (current.ActiveInteractions.Any(it => it.Contains("VAMPIRE")))
+        if (IsVampire(current))
         {
             description += "\nVampire\n";
             classes.Add("vampire");
         }
-        if (current.ActiveInteractions.Any(it => it.Contains("WEREBEAST")))
+        if (IsWerebeast(current))
         {
             description += "\nWerebeast\n";
             classes.Add("werebeast");
         }
-        if (current.ActiveInteractions.Any(it => it.Contains("SECRET") && !it.Contains("ANIMATE") && !it.Contains("UNDEAD_RES")))
+        if (IsNecromancer(current))
         {
             description += "\nNecromancer\n";
             classes.Add("necromancer");
@@ -178,7 +177,7 @@ public static class HistoricalFigureExtensions
         }
         title += description;
         title += current.Name;
-        if (!current.Alive)
+        if (!current.IsAlive)
         {
             title += $"\n\n(Age: {current.Age}✝)";
             classes.Add("dead");
@@ -198,6 +197,21 @@ public static class HistoricalFigureExtensions
         {
             Classes = classes
         };
+    }
+
+    public static bool IsNecromancer(HistoricalFigure hf)
+    {
+        return hf.ActiveInteractions.Any(it => it.Contains("SECRET") && !it.Contains("ANIMATE") && !it.Contains("UNDEAD_RES"));
+    }
+
+    public static bool IsWerebeast(HistoricalFigure hf)
+    {
+        return hf.ActiveInteractions.Any(it => it.Contains("WEREBEAST"));
+    }
+
+    public static bool IsVampire(HistoricalFigure hf)
+    {
+        return hf.ActiveInteractions.Any(it => it.Contains("VAMPIRE"));
     }
 
     public static void AddWorshipper(this HistoricalFigure? worshipped, HistoricalFigure? worshipper, int strength)
