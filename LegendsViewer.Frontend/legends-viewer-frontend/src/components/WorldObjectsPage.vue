@@ -49,7 +49,7 @@
                                     </v-btn>
                                 </template>
 
-                                <v-card min-width="300">
+                                <v-card min-width="360">
                                     <v-list>
                                         <v-list-item :subtitle="title" title="Filter Settings">
                                             <template v-slot:append>
@@ -64,7 +64,7 @@
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn variant="text" @click="showFilterPopup = false">Cancel</v-btn>
-                                        <v-btn color="primary" variant="text" @click="applyFilters">Save</v-btn>
+                                        <v-btn color="primary" variant="text" @click="applyFilters">Apply</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-menu>

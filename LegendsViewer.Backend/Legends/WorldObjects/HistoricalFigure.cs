@@ -1172,79 +1172,47 @@ public class HistoricalFigure : WorldObject
         foreach (var rule in filter.Filters)
         {
             if (rule.PropertyName.Equals(nameof(IsAlive), StringComparison.InvariantCultureIgnoreCase) &&
-                ViolatesBooleanCriteria(rule, IsAlive))
+                rule.ViolatesBooleanCriteria(IsAlive))
             {
                 return false;
             }
             if (rule.PropertyName.Equals(nameof(IsDeity), StringComparison.InvariantCultureIgnoreCase) &&
-                ViolatesBooleanCriteria(rule, IsDeity))
+                rule.ViolatesBooleanCriteria(IsDeity))
             {
                 return false;
             }
             if (rule.PropertyName.Equals(nameof(HistoricalFigureExtensions.IsVampire), StringComparison.InvariantCultureIgnoreCase) &&
-                ViolatesBooleanCriteria(rule, HistoricalFigureExtensions.IsVampire(this)))
+                rule.ViolatesBooleanCriteria(HistoricalFigureExtensions.IsVampire(this)))
             {
                 return false;
             }
             if (rule.PropertyName.Equals(nameof(HistoricalFigureExtensions.IsWerebeast), StringComparison.InvariantCultureIgnoreCase) &&
-                ViolatesBooleanCriteria(rule, HistoricalFigureExtensions.IsWerebeast(this)))
+                rule.ViolatesBooleanCriteria(HistoricalFigureExtensions.IsWerebeast(this)))
             {
                 return false;
             }
             if (rule.PropertyName.Equals(nameof(HistoricalFigureExtensions.IsNecromancer), StringComparison.InvariantCultureIgnoreCase) &&
-                ViolatesBooleanCriteria(rule, HistoricalFigureExtensions.IsNecromancer(this)))
+                rule.ViolatesBooleanCriteria(HistoricalFigureExtensions.IsNecromancer(this)))
             {
                 return false;
             }
-            if (rule.PropertyName.Equals(nameof(Age), StringComparison.InvariantCultureIgnoreCase) && int.TryParse(rule.Value, out int result))
+            if (rule.PropertyName.Equals(nameof(Age), StringComparison.InvariantCultureIgnoreCase) && int.TryParse(rule.Value, out int ruleAgeValue) &&
+                rule.ViolatesIntegerCriteria(Age, ruleAgeValue))
             {
-                if (rule.Operator == FilterOperator.Equals && Age != result)
-                {
-                    return false;
-                }
-                if (rule.Operator == FilterOperator.NotEquals && Age == result)
-                {
-                    return false;
-                }
-                if (rule.Operator == FilterOperator.GreaterThan && Age <= result)
-                {
-                    return false;
-                }
-                if (rule.Operator == FilterOperator.LessThan && Age >= result)
-                {
-                    return false;
-                }
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(BirthYear), StringComparison.InvariantCultureIgnoreCase) && int.TryParse(rule.Value, out int ruleBirthYearValue) &&
+                rule.ViolatesIntegerCriteria(BirthYear, ruleBirthYearValue))
+            {
+                return false;
+            }
+            if (rule.PropertyName.Equals(nameof(DeathYear), StringComparison.InvariantCultureIgnoreCase) && int.TryParse(rule.Value, out int ruleDeathYearValue) &&
+                rule.ViolatesIntegerCriteria(DeathYear, ruleDeathYearValue))
+            {
+                return false;
             }
         }
 
         return true;
-    }
-
-    private static bool ViolatesBooleanCriteria(FilterRuleDto rule, bool actualValue)
-    {
-        if (rule.Operator == FilterOperator.Equals)
-        {
-            if (rule.Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) && !actualValue)
-            {
-                return true;
-            }
-            else if (rule.Value.Equals("false", StringComparison.InvariantCultureIgnoreCase) && actualValue)
-            {
-                return true;
-            }
-        }
-        if (rule.Operator == FilterOperator.NotEquals)
-        {
-            if (rule.Value.Equals("false", StringComparison.InvariantCultureIgnoreCase) && !actualValue)
-            {
-                return true;
-            }
-            else if (rule.Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) && actualValue)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
