@@ -36,8 +36,9 @@
                 </v-btn>
             </v-btn-toggle>
         </v-list-item>
+        <v-divider class="mt-3 mb-3"/>
         <v-list-item>
-            <div style="float: left; margin-top: 5px;">Age</div>
+            <v-checkbox style="float: left; margin: -10px;" label="Age" v-model="localRules.AgeRuleActive"></v-checkbox>
             <div style="float: right;">
                 <v-row>
                     <v-col>
@@ -51,7 +52,7 @@
             </div>
         </v-list-item>
         <v-list-item>
-            <div style="float: left; margin-top: 5px;">Born</div>
+            <v-checkbox style="float: left; margin: -10px;" label="Born" v-model="localRules.BornRuleActive"></v-checkbox>
             <div style="float: right;">
                 <v-row>
                     <v-col>
@@ -65,7 +66,7 @@
             </div>
         </v-list-item>
         <v-list-item>
-            <div style="float: left; margin-top: 5px;">Died</div>
+            <v-checkbox style="float: left; margin: -10px;" label="Died" v-model="localRules.DiedRuleActive"></v-checkbox>
             <div style="float: right;">
                 <v-row>
                     <v-col>
@@ -97,17 +98,23 @@ const localRules = ref({
     Alive: '',      // e.g., "true" or "false"
     Deity: '',      // e.g., "true" or "false"
     Special: '',    // e.g., "vampire", "werebeast", or "necromancer"
-    AgeOperator: 'Equals' as FilterOperator,
-    AgeValue: 0,
-    BornOperator: 'Equals' as FilterOperator,
-    BornValue: 0,
-    DiedOperator: 'Equals' as FilterOperator,
-    DiedValue: 0
+    AgeRuleActive: false,
+    AgeOperator: null as FilterOperator | null,
+    AgeValue: null as number | null,
+    BornRuleActive: false,
+    BornOperator: null as FilterOperator | null,
+    BornValue: null as number | null,
+    DiedRuleActive: false,
+    DiedOperator: null as FilterOperator | null,
+    DiedValue: null as number | null
 });
 
 // Whenever filters change (or on mount), update localRules
 watchEffect(() => {
     const filters = props.filters ?? [];
+
+    const existsRule = (prop: string) => 
+            filters.find(r => r.propertyName === prop) ? true : false;
 
     const findRuleValue = (prop: string) =>
         filters.find(r => r.propertyName === prop)?.value ?? '';
@@ -115,11 +122,11 @@ watchEffect(() => {
     const findRuleNumberValue = (prop: string) =>
         {
             var stringValue = filters.find(r => r.propertyName === prop)?.value;
-            return stringValue ? parseInt(stringValue) : 0;
+            return stringValue ? parseInt(stringValue) : null;
         };
 
     const findRuleOperator = (prop: string) =>
-        filters.find(r => r.propertyName === prop)?.operator ?? 'Equals';
+        filters.find(r => r.propertyName === prop)?.operator ?? null;
 
     localRules.value.Alive = findRuleValue("IsAlive");
     localRules.value.Deity = findRuleValue("IsDeity");
@@ -133,10 +140,13 @@ watchEffect(() => {
     } else {
         localRules.value.Special = '';
     }
+    localRules.value.AgeRuleActive = existsRule("Age");
     localRules.value.AgeOperator = findRuleOperator("Age");
     localRules.value.AgeValue = findRuleNumberValue("Age");
+    localRules.value.BornRuleActive = existsRule("BirthYear");
     localRules.value.BornOperator = findRuleOperator("BirthYear");
     localRules.value.BornValue = findRuleNumberValue("BirthYear");
+    localRules.value.DiedRuleActive = existsRule("DeathYear");
     localRules.value.DiedOperator = findRuleOperator("DeathYear");
     localRules.value.DiedValue = findRuleNumberValue("DeathYear");
 });
@@ -153,13 +163,15 @@ watch(localRules, () => {
     const setRule = (propName: string, operator: FilterOperator, value: string) => {
         const existing = props.filters!.find(r => r.propertyName === propName);
         if (existing) {
+            existing.operator = operator;
             existing.value = value;
         } else {
-            props.filters!.push({
+            const filterRule = {
                 propertyName: propName,
                 operator: operator,
                 value: value
-            });
+            }
+            props.filters!.push(filterRule);
         }
     };
 
@@ -178,23 +190,23 @@ watch(localRules, () => {
     }
 
     // AGE filter logic
-    if (localRules.value.AgeValue == null || localRules.value.AgeValue === 0) {
+    if (localRules.value.AgeRuleActive == false) {
         removeRule("Age");
-    } else {
+    } else if(localRules.value.AgeOperator != null && localRules.value.AgeValue != null) {
         setRule("Age", localRules.value.AgeOperator, localRules.value.AgeValue.toString());
     }
 
     // BORN filter logic
-    if (localRules.value.BornValue == null || localRules.value.BornValue === 0) {
+    if (localRules.value.BornRuleActive == false) {
         removeRule("BirthYear");
-    } else {
+    } else if(localRules.value.BornOperator != null && localRules.value.BornValue != null) {
         setRule("BirthYear", localRules.value.BornOperator, localRules.value.BornValue.toString());
     }
 
     // DIED filter logic
-    if (localRules.value.DiedValue == null || localRules.value.DiedValue === 0) {
+    if (localRules.value.DiedRuleActive == false) {
         removeRule("DeathYear");
-    } else {
+    } else if(localRules.value.DiedOperator != null && localRules.value.DiedValue != null) {
         setRule("DeathYear", localRules.value.DiedOperator, localRules.value.DiedValue.toString());
     }
 

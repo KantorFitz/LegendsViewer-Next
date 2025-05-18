@@ -49,7 +49,7 @@
                                     </v-btn>
                                 </template>
 
-                                <v-card min-width="360">
+                                <v-card min-width="400">
                                     <v-list>
                                         <v-list-item :subtitle="title" title="Filter Settings">
                                             <template v-slot:append>
