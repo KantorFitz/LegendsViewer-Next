@@ -65,6 +65,7 @@ public interface IWorld
     ParsingErrors ParsingErrors { get; }
     List<WorldObject> PlayerRelatedObjects { get; }
     Dictionary<CreatureInfo, Color> MainRaces { get; }
+    List<CreatureInfo> CreatureInfos { get; }
 
     Task ParseAsync(string xmlFile, string? xmlPlusFile, string? historyFile, string? sitesAndPopulationsFile, string? mapFile);
     CreatureInfo GetCreatureInfo(string id);

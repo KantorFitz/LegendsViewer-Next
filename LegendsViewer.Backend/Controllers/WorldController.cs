@@ -1,6 +1,5 @@
 ﻿using LegendsViewer.Backend.Contracts;
 using LegendsViewer.Backend.Extensions;
-using LegendsViewer.Backend.Legends;
 using LegendsViewer.Backend.Legends.Interfaces;
 using LegendsViewer.Backend.Legends.Maps;
 using Microsoft.AspNetCore.Mvc;

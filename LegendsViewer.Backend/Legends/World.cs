@@ -83,7 +83,7 @@ public class World : IDisposable, IWorld
     public readonly Dictionary<int, WorldEvent> SpecialEventsById = [];
     public readonly Dictionary<Location, WorldRegion> WorldGrid = [];
 
-    private readonly List<CreatureInfo> _creatureInfos = [];
+    public List<CreatureInfo> CreatureInfos { get; } = [];
     private readonly Dictionary<string, CreatureInfo> _creatureInfosById = [];
 
     public readonly Dictionary<string, List<HistoricalFigure>> Breeds = [];
@@ -388,7 +388,7 @@ public class World : IDisposable, IWorld
         {
             return _creatureInfosById[id.ToLower()];
         }
-        var creatureInfo = _creatureInfos.Find(ci =>
+        var creatureInfo = CreatureInfos.Find(ci =>
             ci.Id.Equals(id, StringComparison.InvariantCultureIgnoreCase) ||
             ci.NameSingular.Equals(id, StringComparison.InvariantCultureIgnoreCase) ||
             ci.NamePlural.Equals(id, StringComparison.InvariantCultureIgnoreCase));
@@ -402,14 +402,14 @@ public class World : IDisposable, IWorld
             return CreatureInfo.Unknown;
         }
         CreatureInfo creatureInfo = new(id);
-        _creatureInfos.Add(creatureInfo);
+        CreatureInfos.Add(creatureInfo);
         _creatureInfosById[id.ToLower()] = creatureInfo;
         return creatureInfo;
     }
 
     public void AddCreatureInfo(CreatureInfo creatureInfo)
     {
-        _creatureInfos.Add(creatureInfo);
+        CreatureInfos.Add(creatureInfo);
         _creatureInfosById[creatureInfo.Id.ToLower()] = creatureInfo;
     }
 
@@ -739,7 +739,7 @@ public class World : IDisposable, IWorld
         PlayerRelatedObjects.Clear();
 
         SpecialEventsById.Clear();
-        _creatureInfos.Clear();
+        CreatureInfos.Clear();
         _creatureInfosById.Clear();
 
         Breeds.Clear();
